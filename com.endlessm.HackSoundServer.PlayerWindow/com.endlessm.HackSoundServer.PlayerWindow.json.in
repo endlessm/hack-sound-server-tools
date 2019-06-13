@@ -1,0 +1,69 @@
+{
+  "app-id": "@APP_ID@",
+  "branch": "@BRANCH@",
+  "runtime": "org.gnome.Platform",
+  "runtime-version": "3.30",
+  "sdk": "org.gnome.Sdk",
+  "command": "@APP_ID@",
+  "finish-args": [
+    "--share=ipc",
+    "--socket=x11",
+    "--socket=wayland",
+    "--socket=pulseaudio",
+    "--device=dri",
+    "--own-name=@APP_ID@",
+    "--talk-name=com.endlessm.HackSoundServer2",
+
+
+    "--filesystem=xdg-run/dconf",
+    "--filesystem=~/.config/dconf:ro",
+    "--nofilesystem=~/.local/lib/python3.5",
+    "--talk-name=ca.desrt.dconf",
+    "--env=DCONF_USER_CONFIG_DIR=.config/dconf",
+    "--filesystem=host",
+    "--filesystem=/var/lib/flatpak/exports/share/applications:ro",
+    "--filesystem=/var/lib/flatpak/exports/share/icons:ro",
+    "--env=GSETTINGS_SCHEMA_DIR=/run/host/usr/share/glib-2.0/schemas/"
+
+
+
+  ],
+  "modules": [
+    {
+      "name": "hack-sound-server-tools",
+      "buildsystem": "meson",
+      "sources": [
+        {
+          "type": "git",
+          "path": "..",
+          "branch": "@GIT_CLONE_BRANCH@"
+        }
+      ]
+    },
+    {
+      "name": "hack-services",
+      "buildsystem": "meson",
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/endlessm/hack-services",
+          "branch": "master"
+        }
+      ]
+    },
+    {
+      "name": "playerwindow",
+      "buildsystem": "meson",
+      "config-opts": [
+        "-Dapp-id-sufix=@APP_ID_SUFIX@"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "path": ".",
+          "branch": "@GIT_CLONE_BRANCH@"
+        }
+      ]
+    }
+  ]
+}

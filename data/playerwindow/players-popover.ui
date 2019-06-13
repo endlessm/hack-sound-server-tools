@@ -53,7 +53,6 @@
                       <object class="GtkEntry" id="newPlayerEntry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <signal name="insert-text" handler="onNewPlayerEntryInsertText" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -92,7 +91,6 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <signal name="clicked" handler="onNewPlayerButtonClicked" swapped="no"/>
                             <child>
                               <object class="GtkImage">
                                 <property name="visible">True</property>

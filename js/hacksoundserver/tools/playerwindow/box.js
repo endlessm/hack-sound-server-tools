@@ -82,11 +82,11 @@ var PlayerBox = GObject.registerClass({
         const {appId, options} = this.currentSelectedPlayerInfo;
         soundServer.getPlayer(appId, options).then(player => {
             this._soundsListBox.current_player = player;
-            player.play(this.currentSelectedSoundEventId).then(sound => {
-                this._soundsListBox.current_sound = sound;
-            }).catch(err => {
-                logError(err);
+            player.play(this.currentSelectedSoundEventId).catch(err => {
+                logError(err, `Error playing sound ${this.currentSelectedSoundEventId}`);
             });
+        }).catch(err => {
+            logError(err, `Error getting player ${appId}`);
         });
     }
 

@@ -52,7 +52,6 @@ var SoundsListBoxRow = GObject.registerClass({
     }
 
     onStopButtonClicked(_button) {
-        print('stop clicked on ' + this.sound.objectPath);
         this.sound.stop();
     }
 });
@@ -66,17 +65,13 @@ var SoundsListBox = GObject.registerClass({
     Properties: {
         'current-player': GObject.ParamSpec.object('current-player', '', '',
                                                    GObject.ParamFlags.READWRITE,
-                                                   GObject.Object),
-        'current-sound': GObject.ParamSpec.object('current-sound', '', '',
-                                                  GObject.ParamFlags.READWRITE,
-                                                  GObject.Object),
+                                                   GObject.Object)
     },
     Template: 'resource:///com/endlessm/hacksoundserver/tools/data/playerwindow/sounds-list-box.ui'
 }, class SoundsListBox extends Gtk.Box {
     _init() {
         super._init();
         this._current_player = null;
-        this._current_sound = null;
 
         // Callback ids.
         this._onSoundAddedId = null;
@@ -88,6 +83,7 @@ var SoundsListBox = GObject.registerClass({
                                          this.onRemovedPlayer.bind(this));
         this.connect('notify::current-player',
                      this.onCurrentPlayerChanged.bind(this));
+        this._searchEntry.connect('search-changed', this.onSearchChanged.bind(this));
 
         this.show_all();
     }
@@ -96,37 +92,22 @@ var SoundsListBox = GObject.registerClass({
         return this._current_player;
     }
 
-    get current_sound() {
-        return this._current_sound;
-    }
-
     set current_player(value) {
-        print('current_player: ' + value);
         if (this._current_player === value) {
-            print('here');
             return;
         }
 
         if (this._onSoundAddedId) {
             this._current_player.disconnect(this._onSoundAddedId);
             this._onSoundAddedId = null;
-            print('disconnect _onSoundAddedId');
         }
         if (this._onSoundRemovedId) {
             this._current_player.disconnect(this._onSoundRemovedId);
             this._onSoundRemovedId = null;
-            print('disconnect _onSoundRemovedId');
         }
 
         this._current_player = value;
         this.notify('current-player');
-    }
-
-    set current_sound(value) {
-        if (this._current_sound === value)
-            return;
-        this._current_sound = value;
-        this.notify('current-sound');
     }
 
     onCurrentPlayerChanged(_popover, _arg) {
@@ -154,9 +135,6 @@ var SoundsListBox = GObject.registerClass({
         if (!row)
             return;
 
-        if (row[0].sound === this.current_sound)
-            this.current_sound = null;
-
         this.listBox.remove(row[0]);
         this.show_all();
     }
@@ -164,13 +142,6 @@ var SoundsListBox = GObject.registerClass({
     onRemovedPlayer(_soundServer, player) {
         if (player === this.current_player)
             this.current_player = null;
-    }
-
-    onRowSelected(listbox, row) {
-        if (row)
-            this.current_sound = row.sound;
-        else
-            this.current_sound = null;
     }
 
     onSearchChanged(searchEntry) {
@@ -185,13 +156,11 @@ var SoundsListBox = GObject.registerClass({
     }
 
     _populateListBox() {
-        print('populate');
         if (!this.current_player)
             return;
 
         for (let sound of this.current_player.sounds) {
             const row = new SoundsListBoxRow(sound);
-            print(sound);
             this.listBox.add(row);
         }
     }

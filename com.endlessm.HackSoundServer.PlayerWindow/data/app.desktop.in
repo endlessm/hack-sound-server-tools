@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=@APP_ID_SUFIX@
+Type=Application
+Exec=@APP_ID@
+StartupNotify=true
+Icon=@APP_ID@
+Categories=Game;
+X-Endless-LaunchMaximized=true
+X-Endless-HackShader=@APP_ID_SUFIX@
+X-Endless-HackableApps=true

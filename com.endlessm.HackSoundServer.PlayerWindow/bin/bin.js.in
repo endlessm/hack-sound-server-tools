@@ -1,0 +1,17 @@
+#!@GJS@
+
+imports.package.init({
+    name: '@APP_ID@',
+    version: '@PACKAGE_VERSION@',
+    prefix: '@prefix@',
+    libdir: '@libdir@',
+});
+
+const Gio = imports.gi.Gio;
+// TODO
+// Unhardcode path @prefix@/share/
+Gio.Resource.load('@prefix@/share/hack-sound-server-tools/hack-sound-server-tools.gresource')._register();
+imports.searchPath.unshift('resource:///com/endlessm/hacksoundserver/tools/js');
+
+
+imports.package.run(imports.main);

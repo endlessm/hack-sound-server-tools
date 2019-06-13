@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/com/endlessm/HackSoundServer/PlayerWindow/@APP_ID_SUFIX@/js">
+    <file>app.js</file>
+    <file>configure.js</file>
+    <file>main.js</file>
+  </gresource>
+</gresources>

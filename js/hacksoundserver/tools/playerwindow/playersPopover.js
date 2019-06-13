@@ -70,8 +70,10 @@ var PlayersPopover = GObject.registerClass({
         super._init();
         this._current_player_info = null;
 
-        this._populateListBox();
+        this._newPlayerEntry.connect('key-press-event', this.onNewPlayerEntryInsertText.bind(this));
+        this._newPlayerButton.connect('clicked', this.onNewPlayerButtonClicked.bind(this));
 
+        this._populateListBox();
 
         const soundServer = SoundServer.getDefault();
         soundServer.connect('player-added', this.onPlayerAdded.bind(this));
@@ -96,6 +98,7 @@ var PlayersPopover = GObject.registerClass({
     }
 
     onCurrentPlayerInfoChanged(popover, _arg) {
+        print('onCurrentPlayerInfoChanged');
         this._newPlayerEntry.text = this.current_player_info.appId;
     }
 
