@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/com/endlessm/hacksoundserver/tools">
+    <file>js/hacksoundserver/tools/soundServer.js</file>
+  </gresource>
+</gresources>
