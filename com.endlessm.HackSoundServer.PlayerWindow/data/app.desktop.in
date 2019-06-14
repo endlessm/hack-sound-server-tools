@@ -9,3 +9,4 @@ Categories=Game;
 X-Endless-LaunchMaximized=true
 X-Endless-HackShader=@APP_ID_SUFIX@
 X-Endless-HackableApps=true
+X-Endless-Hackable=true
